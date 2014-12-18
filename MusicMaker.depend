@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1418862040 source:e:\allans programming\games indev\musicmaker\main.cpp
+	<allegro.h>
+	<string>
+	<time.h>
+	<math.h>
+	<cmath>
+
