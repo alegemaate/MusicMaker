@@ -21,6 +21,9 @@ int piano_y_offset = 0;
 
 double frequency = 0;
 
+// Functions
+void play_sequence(int note_sequence[][2]);
+
 // Program setup
 void setup(){
   // Load instruments
@@ -57,17 +60,95 @@ void game(){
   // Play note
   if( mouse_b & 1){
     play_sample( piano, 255, 127, frequency, 0);
+    rest( 100);
   }
 
   // Draw frequency to screen
-  textprintf_ex( buffer, font, 0, 0, makecol(0,0,0), makecol(255,255,255), "Frequency: %f Mouse_x: %i", frequency, (mouse_x/piano_width + start_key));
+  textprintf_ex( buffer, font, 0, 0, makecol(0,0,0), makecol(255,255,255), "Frequency: %f Key Number (midi): %i", frequency, (mouse_x/piano_width + start_key));
 
   // Cursor
   rectfill( buffer, mouse_x, mouse_y, mouse_x + 4, mouse_y + 4, makecol(255,0,0));
 
   draw_sprite( screen, buffer, 0, 0);
+
+  // Play song
+  if(key[KEY_SPACE]){
+    int song_mary[][2] = {
+      { 26, 0 },
+      { 84, 500 },
+      { 82, 500 },
+      { 80, 500 },
+      { 82, 500 },
+      { 84, 400  },
+      { 84, 400  },
+      { 84, 1000 },
+      { 82, 400  },
+      { 82, 400  },
+      { 82, 1000 },
+      { 84, 400  },
+      { 84, 400  },
+      { 84, 1000 },
+      { 84, 500 },
+      { 82, 500 },
+      { 80, 500 },
+      { 82, 500 },
+      { 84, 400  },
+      { 84, 400  },
+      { 84, 1000 },
+      { 82, 400  },
+      { 82, 400  },
+      { 84, 400  },
+      { 82, 400  },
+      { 80, 1000  },
+      };
+
+    int song_crazy[][2] = {
+      { 26, 0 },
+      { 78, 100 },
+      { 78, 100 },
+      { 80, 100 },
+      { 96, 100 },
+      { 68, 100  },
+      { 97, 100  },
+      { 84, 100 },
+      { 48, 100  },
+      { 95, 100  },
+      { 85, 100 },
+      { 80, 100  },
+      { 87, 100  },
+      { 86, 100 },
+      { 58, 100 },
+      { 82, 100 },
+      { 86, 100 },
+      { 82, 100 },
+      { 87, 100  },
+      { 84, 100  },
+      { 59, 100 },
+      { 98, 100  },
+      { 82, 100  },
+      { 97, 100  },
+      { 82, 100  },
+      { 78, 100  },
+      };
+
+    play_sequence(song_crazy);
+  }
 }
 
+// Play note sequences
+void play_sequence(int note_sequence[][2]){
+  // Variables
+  int newFrequency = 0;
+  int number_of_notes = note_sequence[0][0];
+
+  for( int i = 0; i < number_of_notes; i++){
+    newFrequency = 440 * pow(2.0, (note_sequence[i][0] - 69.0)/12.0);
+    play_sample( piano, 255, 127, newFrequency, 0);
+    rest( note_sequence[i][1]);
+  }
+}
+
+// MAIN
 int main(){
   //Makes sure allegro is running properly
   if (allegro_init() != 0){
