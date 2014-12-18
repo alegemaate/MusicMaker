@@ -59,6 +59,10 @@ void game(){
 
   // Play note
   if( mouse_b & 1){
+    // Down note
+    rectfill( buffer, (mouse_x/piano_width)*piano_width + 1, piano_y_offset, (mouse_x/piano_width)*piano_width + piano_width - 1, piano_y_offset + piano_height, makecol(133,133,133));
+
+    // Play note
     play_sample( piano, 255, 127, frequency, 0);
     rest( 100);
   }
