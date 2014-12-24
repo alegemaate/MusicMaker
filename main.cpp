@@ -2,7 +2,7 @@
 #include<string>
 #include<time.h>
 #include<math.h>
-#include <cmath>
+#include<cmath>
 
 using namespace std;
 
